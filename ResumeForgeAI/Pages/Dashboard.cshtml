@@ -1,0 +1,98 @@
+@page
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="flex h-screen bg-gray-100 font-sans">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-[#1e3a5f] text-white flex flex-col shadow-lg">
+        <div class="h-16 flex items-center px-6 border-b border-gray-700">
+            <h1 class="text-xl font-bold text-[#f59e0b]"><i class="fa-solid fa-file-signature mr-2"></i>ResumeForge</h1>
+        </div>
+        <nav class="flex-1 px-4 py-6 space-y-2">
+            <a href="/Dashboard" class="flex items-center px-4 py-3 bg-white bg-opacity-10 rounded-lg text-white"><i class="fa-solid fa-house mb-1 mr-3 w-5"></i> Dashboard</a>
+            <a href="/ResumeBuilder" class="flex items-center px-4 py-3 text-gray-300 hover:bg-white hover:bg-opacity-5 rounded-lg transition"><i class="fa-solid fa-file-lines mb-1 mr-3 w-5"></i> Resume Builder</a>
+            <a href="/CoverLetter" class="flex items-center px-4 py-3 text-gray-300 hover:bg-white hover:bg-opacity-5 rounded-lg transition"><i class="fa-solid fa-envelope mb-1 mr-3 w-5"></i> Cover Letters</a>
+            <a href="/AtsChecker" class="flex items-center px-4 py-3 text-gray-300 hover:bg-white hover:bg-opacity-5 rounded-lg transition"><i class="fa-solid fa-chart-line mb-1 mr-3 w-5"></i> ATS Checker</a>
+            <a href="/Templates" class="flex items-center px-4 py-3 text-gray-300 hover:bg-white hover:bg-opacity-5 rounded-lg transition"><i class="fa-solid fa-layer-group mb-1 mr-3 w-5"></i> Templates</a>
+            <a href="/Profile" class="flex items-center px-4 py-3 text-gray-300 hover:bg-white hover:bg-opacity-5 rounded-lg transition"><i class="fa-solid fa-gear mb-1 mr-3 w-5"></i> Settings</a>
+        </nav>
+        <div class="p-4 border-t border-gray-700">
+            <a href="/Logout" class="flex items-center px-4 py-2 text-gray-400 hover:text-white transition"><i class="fa-solid fa-arrow-right-from-bracket mr-3"></i> Log Out</a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 overflow-y-auto">
+        <!-- Top nav -->
+        <header class="bg-white px-8 py-4 shadow-sm flex justify-between items-center">
+            <h2 class="text-2xl font-semibold text-gray-800">Welcome back, @User.Identity?.Name!</h2>
+            <div class="flex items-center space-x-4">
+                <button class="bg-[#f59e0b] text-[#1e3a5f] px-5 py-2 font-semibold rounded-lg hover:bg-yellow-400 transition" onclick="window.location.href='/ResumeBuilder'">+ New Resume</button>
+                <div class="w-10 h-10 rounded-full bg-blue-100 border-2 border-[#1e3a5f] overflow-hidden">
+                    <img src="https://ui-avatars.com/api/?name=Alex+User&background=random" alt="User Avatar">
+                </div>
+            </div>
+        </header>
+
+        <!-- Stats -->
+        <div class="p-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm font-medium mb-1">Resumes Created</p>
+                        <h3 class="text-3xl font-bold text-[#1e3a5f]">4</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center text-[#1e3a5f] text-xl">
+                        <i class="fa-solid fa-file-pdf"></i>
+                    </div>
+                </div>
+                <!-- API: GET /api/user/stats -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm font-medium mb-1">Cover Letters</p>
+                        <h3 class="text-3xl font-bold text-[#1e3a5f]">2</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-yellow-50 rounded-full flex items-center justify-center text-[#f59e0b] text-xl">
+                        <i class="fa-solid fa-envelope-open-text"></i>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm font-medium mb-1">Avg. ATS Score</p>
+                        <h3 class="text-3xl font-bold text-green-600">85%</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-green-50 rounded-full flex items-center justify-center text-green-600 text-xl">
+                        <i class="fa-solid fa-bullseye"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold text-gray-800">Recent Resumes</h3>
+                    <a href="/ResumeBuilder" class="text-sm text-blue-600 hover:underline">View all</a>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
+                        <div class="flex items-center space-x-4">
+                            <div class="text-[#1e3a5f] text-2xl"><i class="fa-regular fa-file-lines"></i></div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Software Engineer Resume - Tech Corp</h4>
+                                <p class="text-sm text-gray-500">Updated 2 days ago</p>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50 transition">Edit</button>
+                            <button class="px-3 py-1 text-sm bg-white border border-gray-300 rounded hover:bg-gray-50 transition" onclick="alert('Downloading PDF...')">Download</button>
+                            <!-- API: GET /api/resume/download/{id} -->
+                            <button class="px-3 py-1 text-sm text-red-600 bg-red-50 rounded hover:bg-red-100 transition">Delete</button>
+                        </div>
+                    </div>
+                    <!-- Empty State logic could go here -->
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

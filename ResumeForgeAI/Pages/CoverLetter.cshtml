@@ -1,0 +1,125 @@
+@page
+@{
+    ViewData["Title"] = "Cover Letter Generator";
+}
+
+<div class="flex h-screen bg-gray-50">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-[#1e3a5f] text-white flex flex-col shadow-lg">
+        <div class="h-16 flex items-center px-6 border-b border-gray-700">
+            <h1 class="text-xl font-bold text-[#f59e0b]"><i class="fa-solid fa-file-signature mr-2"></i>ResumeForge</h1>
+        </div>
+        <nav class="flex-1 px-4 py-6 space-y-2">
+            <a href="/Dashboard" class="flex items-center px-4 py-3 text-gray-300 hover:bg-white hover:bg-opacity-5 rounded-lg transition"><i class="fa-solid fa-house mb-1 mr-3 w-5"></i> Dashboard</a>
+            <a href="/ResumeBuilder" class="flex items-center px-4 py-3 text-gray-300 hover:bg-white hover:bg-opacity-5 rounded-lg transition"><i class="fa-solid fa-file-lines mb-1 mr-3 w-5"></i> Resume Builder</a>
+            <a href="/CoverLetter" class="flex items-center px-4 py-3 bg-white bg-opacity-10 rounded-lg text-white"><i class="fa-solid fa-envelope mb-1 mr-3 w-5"></i> Cover Letters</a>
+            <a href="/AtsChecker" class="flex items-center px-4 py-3 text-gray-300 hover:bg-white hover:bg-opacity-5 rounded-lg transition"><i class="fa-solid fa-chart-line mb-1 mr-3 w-5"></i> ATS Checker</a>
+            <a href="/Templates" class="flex items-center px-4 py-3 text-gray-300 hover:bg-white hover:bg-opacity-5 rounded-lg transition"><i class="fa-solid fa-layer-group mb-1 mr-3 w-5"></i> Templates</a>
+        </nav>
+    </aside>
+
+    <main class="flex-1 flex overflow-hidden">
+        <!-- Input Form -->
+        <div class="w-1/2 p-8 border-r bg-white overflow-y-auto z-0">
+            <h2 class="text-2xl font-bold text-[#1e3a5f] mb-6 flex items-center">
+                <i class="fa-solid fa-wand-magic-sparkles text-[#f59e0b] mr-3"></i> AI Cover Letter
+            </h2>
+            <form id="cl-form" class="space-y-6">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700">Job Title</label>
+                    <input type="text" id="job-title" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-[#f59e0b] focus:border-[#f59e0b]" placeholder="e.g. Senior Frontend Developer" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700">Company Name</label>
+                    <input type="text" id="company" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-[#f59e0b] focus:border-[#f59e0b]" placeholder="e.g. Google" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700">Tone</label>
+                    <select id="tone" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-[#f59e0b] focus:border-[#f59e0b]">
+                        <option value="Professional">Professional & Formal</option>
+                        <option value="Friendly">Friendly & Enthusiastic</option>
+                        <option value="Confident">Confident & Assertive</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700">Job Description (Optional but recommended)</label>
+                    <textarea id="jd" rows="6" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-[#f59e0b] focus:border-[#f59e0b]" placeholder="Paste the job posting here for better results..."></textarea>
+                </div>
+                <button type="submit" id="btn-generate-cl" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-lg font-bold text-[#1e3a5f] bg-[#f59e0b] hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#f59e0b] transition">
+                    Generate Cover Letter
+                </button>
+                <!-- API: POST /api/coverletter/generate -->
+            </form>
+        </div>
+
+        <!-- Output Display -->
+        <div class="w-1/2 bg-gray-100 p-8 flex flex-col z-0">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-gray-800">Your Cover Letter</h3>
+                <button class="bg-[#1e3a5f] text-white px-4 py-2 rounded font-semibold hover:bg-blue-900 transition flex items-center shadow" onclick="window.print()">
+                    <i class="fa-solid fa-download mr-2"></i> Download PDF
+                </button>
+            </div>
+
+            <div id="loading" class="hidden flex-1 flex flex-col items-center justify-center">
+                <i class="fa-solid fa-circle-notch fa-spin text-5xl text-[#f59e0b] mb-4"></i>
+                <p class="text-lg text-gray-600 font-medium">Writing your perfect cover letter...</p>
+            </div>
+
+            <div id="output-area" class="flex-1 bg-white p-10 rounded-lg shadow-inner overflow-y-auto text-gray-800 leading-relaxed border border-gray-200">
+                <p class="text-gray-400 italic text-center mt-20">Fill the form and click generate to see your AI-written cover letter here.</p>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    document.getElementById('cl-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const btn = document.getElementById('btn-generate-cl');
+        const loading = document.getElementById('loading');
+        const output = document.getElementById('output-area');
+
+        const jobTitle = document.getElementById('job-title').value;
+        const company = document.getElementById('company').value;
+
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Generating...';
+        output.classList.add('hidden');
+        loading.classList.remove('hidden');
+
+        // Mock API call
+        // TODO: Connect to ASP.NET Core API endpoint
+        setTimeout(() => {
+            loading.classList.add('hidden');
+            output.classList.remove('hidden');
+            btn.disabled = false;
+            btn.innerHTML = 'Generate Cover Letter';
+
+            const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            output.innerHTML = `
+                <div contenteditable="true" class="outline-none" id="printable-cl">
+                    <p class="mb-6">${today}</p>
+                    <p class="mb-4">Hiring Manager<br>${company}</p>
+                    <p class="mb-4">Dear Hiring Manager,</p>
+                    <p class="mb-4">I am writing to express my strong interest in the <strong>${jobTitle}</strong> position at <strong>${company}</strong>. With my background and proven track record in driving successful outcomes, I am confident in my ability to make an immediate impact on your team.</p>
+                    <p class="mb-4">Throughout my career, I have consistently demonstrated a commitment to excellence. I am particularly drawn to ${company}'s mission and the innovative approach you take. My ability to collaborate across cross-functional teams and solve complex problems aligns perfectly with the requirements of this role.</p>
+                    <p class="mb-4">I would welcome the opportunity to discuss how my skills and experiences make me a perfect fit for this position. Thank you for considering my application. I have attached my resume for your review and look forward to the possibility of speaking with you soon.</p>
+                    <p class="mt-8">Sincerely,</p>
+                    <p class="font-bold mt-4">[Your Name]</p>
+                    <p>[Your Contact Info]</p>
+                </div>
+            `;
+        }, 2000);
+    });
+</script>
+
+<style>
+    @@media print {
+        body * { visibility: hidden; }
+        #printable-cl, #printable-cl * { visibility: visible; }
+        #printable-cl { position: absolute; left: 0; top: 0; width: 100%; font-size: 14pt; padding: 2cm; }
+    }
+</style>

@@ -1,0 +1,143 @@
+@page
+@{
+    ViewData["Title"] = "ATS Score Checker";
+}
+
+<div class="flex h-screen bg-gray-50">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-[#1e3a5f] text-white flex flex-col shadow-lg">
+        <div class="h-16 flex items-center px-6 border-b border-gray-700">
+            <h1 class="text-xl font-bold text-[#f59e0b]"><i class="fa-solid fa-file-signature mr-2"></i>ResumeForge</h1>
+        </div>
+        <nav class="flex-1 px-4 py-6 space-y-2">
+            <a href="/Dashboard" class="flex items-center px-4 py-3 text-gray-300 hover:bg-white hover:bg-opacity-5 rounded-lg transition"><i class="fa-solid fa-house mb-1 mr-3 w-5"></i> Dashboard</a>
+            <a href="/ResumeBuilder" class="flex items-center px-4 py-3 text-gray-300 hover:bg-white hover:bg-opacity-5 rounded-lg transition"><i class="fa-solid fa-file-lines mb-1 mr-3 w-5"></i> Resume Builder</a>
+            <a href="/CoverLetter" class="flex items-center px-4 py-3 text-gray-300 hover:bg-white hover:bg-opacity-5 rounded-lg transition"><i class="fa-solid fa-envelope mb-1 mr-3 w-5"></i> Cover Letters</a>
+            <a href="/AtsChecker" class="flex items-center px-4 py-3 bg-white bg-opacity-10 rounded-lg text-white"><i class="fa-solid fa-chart-line mb-1 mr-3 w-5"></i> ATS Checker</a>
+            <a href="/Templates" class="flex items-center px-4 py-3 text-gray-300 hover:bg-white hover:bg-opacity-5 rounded-lg transition"><i class="fa-solid fa-layer-group mb-1 mr-3 w-5"></i> Templates</a>
+        </nav>
+    </aside>
+
+    <main class="flex-1 overflow-y-auto w-full max-w-7xl mx-auto p-10">
+        <div class="mb-10 text-center">
+            <h2 class="text-4xl font-extrabold text-[#1e3a5f] mb-4">ATS Compatibility Checker</h2>
+            <p class="text-gray-600 text-lg">Upload your resume and the job description to instantly see your match score.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <!-- Input Side -->
+            <div class="bg-white p-8 rounded-2xl shadow-md border border-gray-100">
+                <form id="ats-form" class="space-y-6">
+                    <div>
+                        <label class="block text-md font-bold text-gray-800 mb-2">1. Upload Resume (PDF/DOCX) or Paste Text</label>
+                        <div class="flex items-center justify-center w-full">
+                            <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    <i class="fa-solid fa-cloud-arrow-up text-3xl text-gray-400 mb-2"></i>
+                                    <p class="text-sm text-gray-500"><span class="font-semibold text-[#1e3a5f]">Click to upload</span> or drag and drop</p>
+                                </div>
+                                <input type="file" id="resumeFile" class="hidden" accept=".pdf,.doc,.docx" />
+                            </label>
+                        </div>
+                        <div class="my-4 text-center text-gray-500 font-semibold text-sm uppercase">OR</div>
+                        <textarea id="resumeText" rows="4" class="block w-full border border-gray-300 rounded-lg shadow-sm p-3 focus:ring-[#f59e0b] focus:border-[#f59e0b] text-sm" placeholder="Paste resume plain text here..."></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-md font-bold text-gray-800 mb-2">2. Paste Target Job Description</label>
+                        <textarea id="jdText" rows="6" class="block w-full border border-gray-300 rounded-lg shadow-sm p-3 focus:ring-[#f59e0b] focus:border-[#f59e0b] text-sm" placeholder="Paste the exact requirements from the job board..." required></textarea>
+                    </div>
+
+                    <button type="submit" id="btn-check-ats" class="w-full py-4 px-6 border border-transparent rounded-lg shadow-md text-xl font-bold text-[#1e3a5f] bg-[#f59e0b] hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#f59e0b] transition flex justify-center items-center">
+                        <i class="fa-solid fa-radar mr-2"></i> Check ATS Score
+                    </button>
+                    <!-- API: POST /api/ats/analyze -->
+                </form>
+            </div>
+
+            <!-- Output Side -->
+            <div class="bg-white p-8 rounded-2xl shadow-md border border-gray-100 flex flex-col justify-center items-center relative overflow-hidden">
+                <div id="ats-loading" class="absolute inset-0 bg-white/90 z-10 hidden flex-col items-center justify-center">
+                    <i class="fa-solid fa-magnifying-glass-chart fa-beat-fade text-6xl text-[#1e3a5f] mb-6"></i>
+                    <p class="text-xl font-bold text-gray-800">Analyzing keywords & semantics...</p>
+                </div>
+
+                <div id="initial-state" class="text-center text-gray-400">
+                    <i class="fa-solid fa-chart-pie text-6xl mb-4 text-gray-200"></i>
+                    <p class="text-lg">Your results will appear here</p>
+                </div>
+
+                <div id="results-state" class="w-full hidden h-full">
+                    <div class="flex items-center justify-between mb-8 border-b pb-6">
+                        <div>
+                            <h3 class="text-2xl font-bold text-gray-800">Match Result</h3>
+                            <p class="text-gray-500 text-sm">Based on algorithmic ATS simulation</p>
+                        </div>
+                        <div class="relative w-24 h-24">
+                            <!-- Circular progress mock -->
+                            <svg class="w-full h-full" viewBox="0 0 36 36">
+                                <path class="text-gray-200" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="4"></path>
+                                <path class="text-[#f59e0b]" stroke-dasharray="78, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="4"></path>
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center text-xl font-bold text-[#1e3a5f]">78%</div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-bold text-gray-800 mb-3 flex items-center"><i class="fa-solid fa-circle-check text-green-500 mr-2"></i> Matched Keywords</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">React</span>
+                                <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">C#</span>
+                                <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">SQL</span>
+                                <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">Agile</span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 class="font-bold text-gray-800 mb-3 flex items-center"><i class="fa-solid fa-circle-xmark text-red-500 mr-2"></i> Missing Keywords</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium">Docker</span>
+                                <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium">AWS</span>
+                                <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium">Microservices</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                            <h4 class="font-bold text-[#1e3a5f] mb-2 flex items-center"><i class="fa-solid fa-lightbulb text-[#f59e0b] mr-2"></i> AI Suggestions</h4>
+                            <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                                <li>Include specific metrics in your experience section (e.g. "Increased sales by 20%").</li>
+                                <li>Add the missing skill "AWS" if it applies to your past roles.</li>
+                                <li>Ensure job titles exactly match standard naming conventions.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    document.getElementById('ats-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const btn = document.getElementById('btn-check-ats');
+        const loading = document.getElementById('ats-loading');
+        const initial = document.getElementById('initial-state');
+        const results = document.getElementById('results-state');
+
+        btn.disabled = true;
+        loading.classList.remove('hidden');
+        initial.classList.add('hidden');
+        results.classList.add('hidden');
+
+        // Mock ATS API call
+        // TODO: Connect to ASP.NET Core API endpoint
+        setTimeout(() => {
+            loading.classList.add('hidden');
+            results.classList.remove('hidden');
+            btn.disabled = false;
+        }, 2000);
+    });
+</script>

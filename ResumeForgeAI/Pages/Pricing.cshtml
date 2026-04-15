@@ -1,0 +1,90 @@
+@page
+@{
+    ViewData["Title"] = "Pricing Plans";
+}
+
+<!-- Navbar (Same as Index) -->
+<nav class="bg-[#1e3a5f] text-white p-4">
+    <div class="container mx-auto flex justify-between items-center">
+        <div class="text-2xl font-bold tracking-tight text-[#f59e0b]">
+            <a href="/Index"><i class="fa-solid fa-file-signature mr-2"></i>ResumeForge AI</a>
+        </div>
+        <div class="hidden md:flex space-x-6 items-center">
+            <a href="/Index" class="hover:text-[#f59e0b] transition">Home</a>
+            <a href="/Pricing" class="text-[#f59e0b] font-medium transition">Pricing</a>
+            <a href="/Templates" class="hover:text-[#f59e0b] transition">Templates</a>
+            <a href="/Login" class="text-white hover:text-[#f59e0b] font-medium transition">Login</a>
+            <a href="/Register" class="bg-[#f59e0b] text-[#1e3a5f] px-5 py-2 rounded-lg font-bold hover:bg-yellow-400 transition">Sign Up</a>
+        </div>
+    </div>
+</nav>
+
+<section class="py-20 bg-gray-50 flex flex-col justify-center items-center">
+    <div class="container mx-auto px-4 max-w-6xl text-center mb-16">
+        <h1 class="text-5xl font-extrabold text-[#1e3a5f] tracking-tight mb-4">Simple, Transparent Pricing</h1>
+        <p class="text-xl text-gray-500 max-w-2xl mx-auto">Choose the plan that fits your job search needs. No hidden fees. Cancel anytime.</p>
+    </div>
+
+    <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 pb-20 max-w-5xl">
+        <!-- Free Plan -->
+        <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 flex flex-col hover:shadow-xl transition">
+            <h3 class="text-2xl font-bold text-gray-800 mb-2">Basic</h3>
+            <p class="text-gray-500 mb-6 flex-1">Perfect for trying out the builder.</p>
+            <div class="mb-6">
+                <span class="text-4xl font-extrabold text-[#1e3a5f]">Free</span>
+            </div>
+            <ul class="space-y-4 mb-8 text-left">
+                <li class="flex items-start"><i class="fa-solid fa-check text-green-500 mt-1 mr-3"></i> <span class="text-gray-600">1 Resume</span></li>
+                <li class="flex items-start"><i class="fa-solid fa-check text-green-500 mt-1 mr-3"></i> <span class="text-gray-600">2 Basic Templates</span></li>
+                <li class="flex items-start text-gray-400"><i class="fa-solid fa-xmark mt-1 mr-3"></i> <span>No AI Generations</span></li>
+                <li class="flex items-start text-gray-400"><i class="fa-solid fa-xmark mt-1 mr-3"></i> <span>No Cover Letters</span></li>
+                <li class="flex items-start text-gray-400"><i class="fa-solid fa-xmark mt-1 mr-3"></i> <span>No ATS Checker</span></li>
+            </ul>
+            <a href="/Register" class="block w-full text-center bg-gray-100 text-[#1e3a5f] font-bold py-3 rounded-xl hover:bg-gray-200 transition">Get Started</a>
+        </div>
+
+        <!-- Pro Plan (Popular) -->
+        <div class="bg-[#1e3a5f] rounded-2xl shadow-2xl border-2 border-[#f59e0b] p-8 flex flex-col relative transform md:-translate-y-4 hover:scale-105 transition">
+            <!-- Badge -->
+            <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#f59e0b] text-[#1e3a5f] px-4 py-1 rounded-full text-sm font-bold tracking-wider uppercase shadow-md">
+                Most Popular
+            </div>
+            <h3 class="text-2xl font-bold text-white mb-2">Pro</h3>
+            <p class="text-gray-300 mb-6 flex-1">Ideal for serious job seekers aiming high.</p>
+            <div class="mb-6">
+                <!-- PKR 500 equivalent -->
+                <span class="text-4xl font-extrabold text-white">500</span> <span class="text-xl text-gray-300">PKR/mo</span>
+            </div>
+            <ul class="space-y-4 mb-8 text-left text-white">
+                <li class="flex items-start"><i class="fa-solid fa-circle-check text-[#f59e0b] mt-1 mr-3"></i> <span>Unlimited Resumes</span></li>
+                <li class="flex items-start"><i class="fa-solid fa-circle-check text-[#f59e0b] mt-1 mr-3"></i> <span>All 6 Premium Templates</span></li>
+                <li class="flex items-start"><i class="fa-solid fa-circle-check text-[#f59e0b] mt-1 mr-3"></i> <span>50 AI Generations / mo</span></li>
+                <li class="flex items-start"><i class="fa-solid fa-circle-check text-[#f59e0b] mt-1 mr-3"></i> <span>10 Cover Letters / mo</span></li>
+                <li class="flex items-start"><i class="fa-solid fa-circle-check text-[#f59e0b] mt-1 mr-3"></i> <span>Full ATS Checker access</span></li>
+            </ul>
+            <a href="/Register" class="block w-full text-center bg-[#f59e0b] text-[#1e3a5f] font-bold py-3 rounded-xl hover:bg-yellow-400 shadow-lg transition">Upgrade to Pro</a>
+            <!-- API: POST /api/billing/checkout -->
+        </div>
+
+        <!-- Premium Plan -->
+        <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 flex flex-col hover:shadow-xl transition">
+            <h3 class="text-2xl font-bold text-gray-800 mb-2">Premium</h3>
+            <p class="text-gray-500 mb-6 flex-1">For freelancers and professional writers.</p>
+            <div class="mb-6">
+                <span class="text-4xl font-extrabold text-[#1e3a5f]">1000</span> <span class="text-xl text-gray-500">PKR/mo</span>
+            </div>
+            <ul class="space-y-4 mb-8 text-left">
+                <li class="flex items-start"><i class="fa-solid fa-check text-green-500 mt-1 mr-3"></i> <span class="text-gray-600">Everything in Pro</span></li>
+                <li class="flex items-start"><i class="fa-solid fa-check text-green-500 mt-1 mr-3"></i> <span class="text-gray-600">Unlimited AI Generations</span></li>
+                <li class="flex items-start"><i class="fa-solid fa-check text-green-500 mt-1 mr-3"></i> <span class="text-gray-600">Unlimited Cover Letters</span></li>
+                <li class="flex items-start"><i class="fa-solid fa-check text-green-500 mt-1 mr-3"></i> <span class="text-gray-600">Priority Support</span></li>
+            </ul>
+            <a href="/Register" class="block w-full text-center border-2 border-[#1e3a5f] text-[#1e3a5f] font-bold py-3 rounded-xl hover:bg-gray-50 transition">Get Premium</a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-gray-400 py-12 text-center">
+    <p>&copy; 2026 ResumeForge AI. All rights reserved.</p>
+</footer>

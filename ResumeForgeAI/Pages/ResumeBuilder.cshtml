@@ -1,0 +1,272 @@
+@page
+@{
+    ViewData["Title"] = "Resume Builder";
+}
+
+<div class="h-screen flex flex-col bg-gray-50 overflow-hidden">
+    <!-- Navbar -->
+    <header class="h-16 bg-[#1e3a5f] text-white flex justify-between items-center px-4 shadow-md z-10 shrink-0">
+        <div class="flex items-center space-x-4">
+            <a href="/Dashboard" class="text-gray-300 hover:text-white"><i class="fa-solid fa-arrow-left"></i> Back</a>
+            <h1 class="text-xl font-bold flex items-center">
+                <i class="fa-solid fa-file-pen text-[#f59e0b] mr-2"></i>
+                Untitled Resume Document
+            </h1>
+        </div>
+        <div class="flex items-center space-x-3">
+            <button class="bg-white text-[#1e3a5f] px-4 py-2 rounded text-sm font-semibold hover:bg-gray-100 transition"><i class="fa-solid fa-palette mr-1"></i> Template</button>
+            <button class="border border-white text-white px-4 py-2 rounded text-sm font-semibold hover:bg-white hover:text-[#1e3a5f] transition" onclick="alert('Saving...')"><i class="fa-solid fa-floppy-disk mr-1"></i> Save</button>
+            <button class="bg-[#f59e0b] text-[#1e3a5f] px-4 py-2 rounded text-sm font-semibold hover:bg-yellow-400 transition" onclick="window.print()"><i class="fa-solid fa-download mr-1"></i> Download PDF</button>
+        </div>
+    </header>
+
+    <div class="flex-1 flex overflow-hidden">
+        <!-- Left Panel: Form -->
+        <div class="w-1/3 bg-white border-r border-gray-200 overflow-y-auto z-0 shadow-inner flex flex-col">
+            <div class="p-6">
+                <h2 class="text-2xl font-bold text-[#1e3a5f] border-b pb-4 mb-6">Resume Details</h2>
+
+                <div class="mb-8">
+                    <h3 class="text-lg font-bold text-gray-800 flex items-center mb-4"><i class="fa-regular fa-user text-gray-500 mr-2 text-xl"></i> Personal Info</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm text-gray-700 mb-1">Full Name</label>
+                            <input id="input-name" type="text" class="w-full border rounded-lg p-2.5 text-sm focus:ring-1 focus:ring-[#1e3a5f] outline-none" value="Mohammad Naeem">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm text-gray-700 mb-1">Email</label>
+                                <input id="input-email" type="text" class="w-full border rounded-lg p-2.5 text-sm focus:ring-1 focus:ring-[#1e3a5f] outline-none" value="mohammadd">
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-700 mb-1">Phone</label>
+                                <input id="input-phone" type="text" class="w-full border rounded-lg p-2.5 text-sm focus:ring-1 focus:ring-[#1e3a5f] outline-none" placeholder="(555) 123-4567" value="(555) 123-4567">
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-700 mb-1">LinkedIn</label>
+                                <input id="input-linkedin" type="text" class="w-full border rounded-lg p-2.5 text-sm focus:ring-1 focus:ring-[#1e3a5f] outline-none" placeholder="linkedin.com/in/johndoe">
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-700 mb-1">Location</label>
+                                <input id="input-location" type="text" class="w-full border rounded-lg p-2.5 text-sm focus:ring-1 focus:ring-[#1e3a5f] outline-none" placeholder="New York, NY" value="New York, NY">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="text-lg font-bold text-gray-800 border-b pb-2 mt-8 mb-4">Professional Summary</h2>
+                <textarea id="summary-input" rows="4" class="w-full border rounded p-2 text-sm focus:ring-1 focus:ring-[#f59e0b] outline-none" placeholder="Write a summary or use AI to generate one..."></textarea>
+
+                <h2 class="text-lg font-bold text-gray-800 border-b pb-2 mt-8 mb-4 flex justify-between items-center">
+                    Work Experience
+                    <button class="text-[#f59e0b] text-sm"><i class="fa-solid fa-plus"></i> Add</button>
+                </h2>
+                <div class="border border-gray-200 rounded p-4 bg-gray-50 mb-4">
+                    <input id="input-exp-title" type="text" placeholder="Job Title" class="w-full border rounded p-2 text-sm mb-2" value="Software Engineer">
+                    <input id="input-exp-company" type="text" placeholder="Company" class="w-full border rounded p-2 text-sm mb-2" value="Tech Innovations Inc.">
+                    <textarea id="input-exp-desc" rows="3" class="w-full border rounded p-2 text-sm" placeholder="Descriptions/Bullet points...">Developed and maintained RESTful APIs used by 1M+ users daily. Reduced server response time by 30% through caching and query optimization.</textarea>
+                </div>
+
+                <h2 class="text-lg font-bold text-gray-800 border-b pb-2 mt-8 mb-4 flex justify-between items-center">
+                    Education
+                    <button class="text-[#f59e0b] text-sm"><i class="fa-solid fa-plus"></i> Add</button>
+                </h2>
+                <div class="border border-gray-200 rounded p-4 bg-gray-50 mb-4">
+                    <input id="input-edu-degree" type="text" placeholder="Degree (e.g. BS Computer Science)" class="w-full border rounded p-2 text-sm mb-2" value="Bachelor of Science in Computer Science">
+                    <input id="input-edu-school" type="text" placeholder="School/University" class="w-full border rounded p-2 text-sm mb-2" value="University of Technology">
+                </div>
+
+                <h2 class="text-lg font-bold text-gray-800 border-b pb-2 mt-8 mb-4 flex justify-between items-center">
+                    Skills
+                </h2>
+                <div class="border border-gray-200 rounded p-4 bg-gray-50 mb-4">
+                    <input id="input-skills" type="text" placeholder="e.g. C#, JavaScript, React (comma separated)" class="w-full border rounded p-2 text-sm" value="C#, JavaScript, React, Tailwind CSS">
+                </div>
+            </div>
+        </div>
+
+        <!-- Center Panel: Live Preview -->
+        <div class="w-1/3 bg-gray-200 flex-1 overflow-y-auto flex justify-center p-8 z-0">
+            <div id="resume-preview" class="w-full max-w-3xl bg-white shadow-2xl p-10 min-h-full print:shadow-none print:p-0">
+                <div class="text-center border-b pb-6 mb-6">
+                    <h1 id="preview-name" class="text-4xl font-bold uppercase tracking-wider text-gray-900">Mohammad Naeem</h1>
+                    <p class="text-gray-600 mt-2 text-sm">
+                        <span id="preview-location">New York, NY</span> | 
+                        <span id="preview-email">mohammadd</span> | 
+                        <span id="preview-phone">(555) 123-4567</span>
+                        <span id="preview-separator-linkedin" style="display:none;"> | </span>
+                        <span id="preview-linkedin"></span>
+                    </p>
+                </div>
+                <div class="mb-6">
+                    <h2 class="text-lg font-bold text-gray-800 uppercase tracking-widest border-b border-gray-300 pb-1 mb-2">Summary</h2>
+                    <p class="text-gray-700 text-sm leading-relaxed" id="summary-preview">Passionate software engineer with 5 years of experience building scalable web applications. Strong focus on modern cloud architectures.</p>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-gray-800 uppercase tracking-widest border-b border-gray-300 pb-1 mb-2">Experience</h2>
+                    <div class="mb-4">
+                        <div class="flex justify-between items-baseline mb-1">
+                            <h3 id="preview-exp-title" class="font-bold text-gray-800">Software Engineer</h3>
+                            <span class="text-gray-500 text-sm italic">2020 - Present</span>
+                        </div>
+                        <p id="preview-exp-company" class="text-gray-600 text-sm mb-2 italic">Tech Innovations Inc.</p>
+                        <ul class="list-disc list-inside text-gray-700 text-sm space-y-1">
+                            <li id="preview-exp-desc">Developed and maintained RESTful APIs used by 1M+ users daily. Reduced server response time by 30% through caching and query optimization.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <h2 class="text-lg font-bold text-gray-800 uppercase tracking-widest border-b border-gray-300 pb-1 mb-2">Education</h2>
+                    <div class="mb-4">
+                        <div class="flex justify-between items-baseline mb-1">
+                            <h3 id="preview-edu-degree" class="font-bold text-gray-800">Bachelor of Science in Computer Science</h3>
+                        </div>
+                        <p id="preview-edu-school" class="text-gray-600 text-sm italic">University of Technology</p>
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <h2 class="text-lg font-bold text-gray-800 uppercase tracking-widest border-b border-gray-300 pb-1 mb-2">Skills</h2>
+                    <p id="preview-skills" class="text-gray-700 text-sm leading-relaxed">C#, JavaScript, React, Tailwind CSS</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel: AI Assistant -->
+        <div class="w-1/4 bg-white border-l border-gray-200 flex flex-col z-0">
+            <div class="p-6 border-b border-gray-200 bg-[#1e3a5f] text-white">
+                <h2 class="text-xl font-bold flex items-center">
+                    <i class="fa-solid fa-wand-magic-sparkles text-[#f59e0b] mr-2"></i> AI Assistant
+                </h2>
+                <p class="text-xs text-gray-300 mt-2">Tailor your resume instantly.</p>
+            </div>
+            <div class="flex-1 p-6 overflow-y-auto">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Target Job Description</label>
+                <textarea id="ai-jd-input" rows="6" class="w-full border rounded p-3 text-sm focus:ring-1 focus:ring-[#f59e0b] outline-none mb-4" placeholder="Paste the job requirements here..."></textarea>
+                <button id="btn-generate" class="w-full bg-[#1e3a5f] text-white font-bold py-3 rounded-lg hover:bg-blue-900 transition flex items-center justify-center">
+                    <i class="fa-solid fa-bolt text-[#f59e0b] mr-2"></i> Generate Bullet Points
+                </button>
+                <!-- API: POST /api/resume/generate -->
+
+                <div id="ai-loading" class="hidden text-center py-8">
+                    <i class="fa-solid fa-circle-notch fa-spin text-3xl text-[#f59e0b] mb-4"></i>
+                    <p class="text-sm text-gray-500 font-medium">Analyzing description and generating content...</p>
+                </div>
+
+                <div id="ai-results" class="hidden mt-8">
+                    <h3 class="font-bold text-gray-800 text-sm uppercase tracking-wider mb-4 border-b pb-2">Suggestions</h3>
+                    <div class="space-y-3">
+                        <div class="p-3 bg-blue-50 border border-blue-100 rounded-lg cursor-pointer hover:bg-blue-100 transition shadow-sm" onclick="applyAiText('Engineered a high-performance cloud-native microservices architecture...')">
+                            <p class="text-sm text-gray-700">Engineered a high-performance cloud-native microservices architecture, improving system scalability by 40%.</p>
+                            <span class="text-xs text-[#f59e0b] font-bold mt-2 inline-block">+ Apply</span>
+                        </div>
+                        <div class="p-3 bg-blue-50 border border-blue-100 rounded-lg cursor-pointer hover:bg-blue-100 transition shadow-sm" onclick="applyAiText('Spearheaded migration of legacy systems to AWS...')">
+                            <p class="text-sm text-gray-700">Spearheaded migration of legacy REST APIs to AWS Serverless architecture.</p>
+                            <span class="text-xs text-[#f59e0b] font-bold mt-2 inline-block">+ Apply</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('btn-generate').addEventListener('click', function() {
+        const btn = this;
+        const loading = document.getElementById('ai-loading');
+        const results = document.getElementById('ai-results');
+
+        if(document.getElementById('ai-jd-input').value.trim() === '') {
+            alert('Please paste a job description first.');
+            return;
+        }
+
+        btn.disabled = true;
+        btn.classList.add('opacity-50');
+        loading.classList.remove('hidden');
+        results.classList.add('hidden');
+
+        // Mock AI request
+        setTimeout(() => {
+            loading.classList.add('hidden');
+            results.classList.remove('hidden');
+            btn.disabled = false;
+            btn.classList.remove('opacity-50');
+        }, 2000); // 2 second mock delay
+    });
+
+    function applyAiText(text) {
+        document.getElementById('summary-input').value = text;
+        document.getElementById('summary-preview').innerText = text;
+        alert('Text applied to resume!');
+    }
+
+    // Live binding
+    function bindInput(inputId, previewId) {
+        const input = document.getElementById(inputId);
+        const preview = document.getElementById(previewId);
+        if(input && preview) {
+            input.addEventListener('input', function() {
+                preview.innerText = this.value;
+            });
+            // trigger on load
+            preview.innerText = input.value;
+        }
+    }
+
+    bindInput('input-name', 'preview-name');
+    bindInput('input-location', 'preview-location');
+    bindInput('input-email', 'preview-email');
+    bindInput('input-phone', 'preview-phone');
+    bindInput('input-exp-title', 'preview-exp-title');
+    bindInput('input-exp-company', 'preview-exp-company');
+    bindInput('input-exp-desc', 'preview-exp-desc');
+    bindInput('input-edu-degree', 'preview-edu-degree');
+    bindInput('input-edu-school', 'preview-edu-school');
+    bindInput('input-skills', 'preview-skills');
+
+    // Special handler for summary to provide default fallback text
+    const summaryInput = document.getElementById('summary-input');
+    const summaryPreview = document.getElementById('summary-preview');
+    if (summaryInput && summaryPreview) {
+        summaryInput.addEventListener('input', function() {
+            summaryPreview.innerText = this.value || 'Write a summary or use AI to generate one...';
+        });
+    }
+
+    // Special handler for LinkedIn (conditional separator visibility)
+    const linkedInInput = document.getElementById('input-linkedin');
+    const linkedInPreview = document.getElementById('preview-linkedin');
+    const linkedInSeparator = document.getElementById('preview-separator-linkedin');
+    if(linkedInInput && linkedInPreview && linkedInSeparator) {
+        linkedInInput.addEventListener('input', function() {
+            linkedInPreview.innerText = this.value;
+            linkedInSeparator.style.display = this.value.trim() ? 'inline' : 'none';
+        });
+        linkedInInput.dispatchEvent(new Event('input')); // Trigger initial state
+    }
+</script>
+
+<style>
+    /* Prevent default layout applied to body from ruining h-screen */
+    html, body {
+        height: 100%;
+        margin: 0;
+    }
+    @@media print {
+        body * {
+            visibility: hidden;
+        }
+        #resume-preview, #resume-preview * {
+            visibility: visible;
+        }
+        #resume-preview {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+        }
+    }
+</style>
