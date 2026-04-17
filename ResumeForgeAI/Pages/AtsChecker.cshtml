@@ -1,4 +1,5 @@
 @page
+@model ResumeForgeAI.Pages.AtsCheckerModel
 @{
     ViewData["Title"] = "ATS Score Checker";
 }
@@ -27,25 +28,30 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
             <!-- Input Side -->
             <div class="bg-white p-8 rounded-2xl shadow-md border border-gray-100">
-                <form id="ats-form" class="space-y-6">
+                <form id="ats-form" class="space-y-6" method="post" enctype="multipart/form-data">
                     <div>
                         <label class="block text-md font-bold text-gray-800 mb-2">1. Upload Resume (PDF/DOCX) or Paste Text</label>
                         <div class="flex items-center justify-center w-full">
-                            <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition">
-                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                            <label for="resumeFile" id="upload-label" class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition">
+                                <div id="upload-content" class="flex flex-col items-center justify-center pt-5 pb-6">
                                     <i class="fa-solid fa-cloud-arrow-up text-3xl text-gray-400 mb-2"></i>
                                     <p class="text-sm text-gray-500"><span class="font-semibold text-[#1e3a5f]">Click to upload</span> or drag and drop</p>
                                 </div>
-                                <input type="file" id="resumeFile" class="hidden" accept=".pdf,.doc,.docx" />
+                                <div id="file-selected" class="hidden flex-col items-center justify-center pt-5 pb-6">
+                                    <i class="fa-solid fa-file-pdf text-3xl text-green-500 mb-2"></i>
+                                    <p id="file-name" class="text-sm font-semibold text-gray-700"></p>
+                                    <p class="text-xs text-gray-400 mt-1">Click to change file</p>
+                                </div>
+                                <input type="file" id="resumeFile" name="resumeFile" class="hidden" accept=".pdf,.doc,.docx" />
                             </label>
                         </div>
                         <div class="my-4 text-center text-gray-500 font-semibold text-sm uppercase">OR</div>
-                        <textarea id="resumeText" rows="4" class="block w-full border border-gray-300 rounded-lg shadow-sm p-3 focus:ring-[#f59e0b] focus:border-[#f59e0b] text-sm" placeholder="Paste resume plain text here..."></textarea>
+                        <textarea id="resumeText" name="resumeText" rows="4" class="block w-full border border-gray-300 rounded-lg shadow-sm p-3 focus:ring-[#f59e0b] focus:border-[#f59e0b] text-sm" placeholder="Paste resume plain text here..."></textarea>
                     </div>
 
                     <div>
                         <label class="block text-md font-bold text-gray-800 mb-2">2. Paste Target Job Description</label>
-                        <textarea id="jdText" rows="6" class="block w-full border border-gray-300 rounded-lg shadow-sm p-3 focus:ring-[#f59e0b] focus:border-[#f59e0b] text-sm" placeholder="Paste the exact requirements from the job board..." required></textarea>
+                        <textarea id="jdText" name="jdText" rows="6" class="block w-full border border-gray-300 rounded-lg shadow-sm p-3 focus:ring-[#f59e0b] focus:border-[#f59e0b] text-sm" placeholder="Paste the exact requirements from the job board..." required></textarea>
                     </div>
 
                     <button type="submit" id="btn-check-ats" class="w-full py-4 px-6 border border-transparent rounded-lg shadow-md text-xl font-bold text-[#1e3a5f] bg-[#f59e0b] hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#f59e0b] transition flex justify-center items-center">
@@ -119,7 +125,7 @@
 </div>
 
 <script>
-    document.getElementById('ats-form').addEventListener('submit', function(e) {
+    document.getElementById('ats-form').addEventListener('submit', async function(e) {
         e.preventDefault();
 
         const btn = document.getElementById('btn-check-ats');
@@ -127,17 +133,124 @@
         const initial = document.getElementById('initial-state');
         const results = document.getElementById('results-state');
 
+        // Form validation
+        const fileInput = document.getElementById('resumeFile');
+        const textInput = document.getElementById('resumeText');
+        if (fileInput.files.length === 0 && textInput.value.trim() === '') {
+            alert('Please upload a PDF resume or paste plain text.');
+            return;
+        }
+
         btn.disabled = true;
         loading.classList.remove('hidden');
         initial.classList.add('hidden');
         results.classList.add('hidden');
 
-        // Mock ATS API call
-        // TODO: Connect to ASP.NET Core API endpoint
-        setTimeout(() => {
+        try {
+            const formData = new FormData(this);
+
+            const response = await fetch('?handler=Analyze', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(errorText || 'Server Error');
+            }
+
+            const data = await response.json();
+
+            // Populate Data
+            document.querySelector('#results-state .text-\\[\\#1e3a5f\\]').innerText = `${data.score}%`;
+
+            // Update Circle Chart
+            const circle = document.querySelector('#results-state svg path.text-\\[\\#f59e0b\\]');
+            circle.setAttribute('stroke-dasharray', `${data.score}, 100`);
+
+            // Update matched keywords
+            const matchedContainer = document.querySelector('#results-state h4:first-of-type').nextElementSibling;
+            matchedContainer.innerHTML = data.matchedKeywords.length > 0 
+                ? data.matchedKeywords.map(k => `<span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">${escapeHtml(k)}</span>`).join('')
+                : '<span class="text-sm text-gray-500">None found</span>';
+
+            // Update missing keywords
+            const missingNodes = document.querySelectorAll('#results-state h4');
+            const missingContainer = missingNodes[1].nextElementSibling;
+            missingContainer.innerHTML = data.missingKeywords.length > 0
+                ? data.missingKeywords.map(k => `<span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium">${escapeHtml(k)}</span>`).join('')
+                : '<span class="text-sm text-gray-500">None found</span>';
+
+            // Update suggestions
+            const suggestionsContainer = document.querySelector('#results-state ul');
+            suggestionsContainer.innerHTML = data.suggestions.length > 0
+                ? data.suggestions.map(s => `<li>${escapeHtml(s)}</li>`).join('')
+                : '<span class="text-sm text-gray-500">No suggestions</span>';
+
             loading.classList.add('hidden');
             results.classList.remove('hidden');
+
+        } catch (err) {
+            console.error(err);
+            alert(`Analysis failed: ${err.message}`);
+            loading.classList.add('hidden');
+            initial.classList.remove('hidden');
+        } finally {
             btn.disabled = false;
-        }, 2000);
+        }
+    });
+
+    function escapeHtml(unsafe) {
+        return unsafe.replace(/&/g, "&amp;")
+                     .replace(/</g, "&lt;")
+                     .replace(/>/g, "&gt;")
+                     .replace(/"/g, "&quot;")
+                     .replace(/'/g, "&#039;");
+    }
+
+    // File upload visual feedback
+    const fileInput = document.getElementById('resumeFile');
+    const uploadContent = document.getElementById('upload-content');
+    const fileSelected = document.getElementById('file-selected');
+    const fileNameDisplay = document.getElementById('file-name');
+    const uploadLabel = document.getElementById('upload-label');
+
+    fileInput.addEventListener('change', function(e) {
+        if (e.target.files.length > 0) {
+            const fileName = e.target.files[0].name;
+            fileNameDisplay.textContent = fileName;
+
+            // Toggle visual states
+            uploadContent.classList.add('hidden');
+            fileSelected.classList.remove('hidden');
+            uploadLabel.classList.add('border-green-500', 'bg-green-50');
+            uploadLabel.classList.remove('border-gray-300', 'bg-gray-50');
+
+            // Optional: change icon based on file type
+            const icon = fileSelected.querySelector('i');
+            if (fileName.endsWith('.pdf')) {
+                icon.className = 'fa-solid fa-file-pdf text-3xl text-red-500 mb-2';
+            } else {
+                icon.className = 'fa-solid fa-file-word text-3xl text-blue-500 mb-2';
+            }
+        }
+    });
+
+    // Drag and drop visual cues (Optional enhancement)
+    uploadLabel.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadLabel.classList.add('border-[#f59e0b]', 'bg-yellow-50');
+    });
+    uploadLabel.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        uploadLabel.classList.remove('border-[#f59e0b]', 'bg-yellow-50');
+    });
+    uploadLabel.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadLabel.classList.remove('border-[#f59e0b]', 'bg-yellow-50');
+        if (e.dataTransfer.files.length) {
+            fileInput.files = e.dataTransfer.files;
+            fileInput.dispatchEvent(new Event('change'));
+        }
     });
 </script>

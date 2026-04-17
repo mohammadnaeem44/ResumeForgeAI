@@ -30,17 +30,20 @@
                 <div class="aspect-w-3 aspect-h-4 bg-gray-200">
                     <!-- Mock thumbnail -->
                     <div class="w-full h-64 bg-white border border-gray-300 flex flex-col p-4">
-                        <div class="h-8 bg-gray-900 w-full mb-4"></div>
-                        <div class="flex flex-1 gap-2">
-                            <div class="w-2/3 space-y-2">
-                                <div class="h-4 bg-gray-300 w-full"></div>
-                                <div class="h-2 bg-gray-200 w-full mb-4"></div>
-                                <div class="h-4 bg-gray-300 w-full"></div>
-                                <div class="h-2 bg-gray-200 w-full"></div>
+                        <div class="h-6 bg-gray-800 w-1/2 mx-auto mb-2"></div>
+                        <div class="h-2 bg-gray-400 w-1/3 mx-auto mb-6"></div>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="h-3 bg-gray-600 w-1/4 mb-2"></div>
+                                <div class="border-b border-gray-300 w-full mb-2"></div>
+                                <div class="h-2 bg-gray-300 w-full mb-1"></div>
+                                <div class="h-2 bg-gray-300 w-5/6"></div>
                             </div>
-                            <div class="w-1/3 border-l border-gray-200 pl-2 space-y-2">
-                                <div class="h-4 bg-gray-300 w-full"></div>
-                                <div class="h-2 bg-gray-200 w-full"></div>
+                            <div>
+                                <div class="h-3 bg-gray-600 w-1/4 mb-2"></div>
+                                <div class="border-b border-gray-300 w-full mb-2"></div>
+                                <div class="h-2 bg-gray-300 w-full mb-1"></div>
+                                <div class="h-2 bg-gray-300 w-4/5"></div>
                             </div>
                         </div>
                     </div>
@@ -56,13 +59,23 @@
             <!-- Template 2 -->
             <div class="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden hover:shadow-xl transition relative group">
                 <div class="aspect-w-3 aspect-h-4 bg-gray-200">
-                    <div class="w-full h-64 bg-white border border-gray-300 flex p-4">
-                        <div class="w-1/3 bg-[#1e3a5f] h-full mr-2"></div>
-                        <div class="w-2/3 space-y-2 pt-2">
-                            <div class="h-6 bg-gray-900 w-full mb-4"></div>
-                            <div class="h-4 bg-gray-300 w-full"></div>
-                            <div class="h-2 bg-gray-200 w-full mb-4"></div>
-                            <div class="h-4 bg-gray-300 w-full"></div>
+                    <div class="w-full h-64 bg-white border border-gray-300 flex">
+                        <div class="w-1/4 bg-[#1e3a5f] h-full p-2 flex flex-col gap-2 shadow-inner">
+                            <div class="h-8 w-8 rounded-full bg-white bg-opacity-30 mx-auto mt-2"></div>
+                            <div class="h-2 bg-white bg-opacity-50 w-3/4 mx-auto mt-4"></div>
+                            <div class="h-2 bg-white bg-opacity-50 w-1/2 mx-auto"></div>
+                            <div class="h-1 bg-white bg-opacity-30 w-full mt-4"></div>
+                            <div class="h-2 bg-white bg-opacity-50 w-3/4 mx-auto mt-2"></div>
+                        </div>
+                        <div class="w-3/4 p-4 space-y-4">
+                            <div class="h-5 bg-gray-800 w-3/4"></div>
+                            <div class="h-2 bg-[#f59e0b] w-1/3 mb-4"></div>
+                            <div class="space-y-2">
+                                <div class="h-2 bg-gray-300 w-full"></div>
+                                <div class="h-2 bg-gray-300 w-5/6"></div>
+                                <div class="h-2 bg-gray-300 w-full"></div>
+                                <div class="h-2 bg-gray-300 w-4/5"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -82,8 +95,30 @@
                     <a href="/Pricing" class="bg-[#f59e0b] text-[#1e3a5f] px-6 py-2 rounded font-bold hover:bg-yellow-400">Upgrade Now</a>
                 </div>
                 <!-- API: GET /api/user/subscription -->
-                <div class="aspect-w-3 aspect-h-4 bg-gray-200 filter blur-sm">
-                    <div class="w-full h-64 bg-white border border-gray-300"></div>
+                <div class="aspect-w-3 aspect-h-4 bg-gray-200 filter blur-sm transition duration-300 group-hover:blur-md">
+                    <div class="w-full h-64 bg-white border border-gray-300 flex flex-col">
+                        <div class="w-full h-12 bg-gray-100 border-b border-gray-200 p-3 flex gap-3 items-center">
+                            <div class="h-6 w-6 bg-[#f59e0b] rounded-sm"></div>
+                            <div class="h-4 bg-gray-800 w-1/2"></div>
+                        </div>
+                        <div class="flex flex-1 p-3 gap-3">
+                            <div class="w-2/3 space-y-3">
+                                <div class="h-3 bg-gray-800 w-1/3 border-b-2 border-[#1e3a5f] pb-1 mb-2"></div>
+                                <div class="h-2 bg-gray-300 w-full"></div>
+                                <div class="h-2 bg-gray-300 w-full"></div>
+                                <div class="h-2 bg-gray-300 w-5/6"></div>
+                                <div class="h-3 bg-gray-800 w-1/3 border-b-2 border-[#1e3a5f] pb-1 mt-4 mb-2"></div>
+                                <div class="h-2 bg-gray-300 w-full"></div>
+                                <div class="h-2 bg-gray-300 w-4/5"></div>
+                            </div>
+                            <div class="w-1/3 space-y-2 border-l border-gray-200 pl-3">
+                                <div class="h-2 bg-gray-500 w-2/3 mb-2"></div>
+                                <div class="h-2 bg-gray-200 w-full"></div>
+                                <div class="h-2 bg-gray-200 w-full"></div>
+                                <div class="h-2 bg-gray-200 w-3/4"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="p-6 text-center">
                     <h3 class="text-xl font-bold text-gray-500 mb-2 flex justify-center items-center">Executive <i class="fa-solid fa-star text-[#f59e0b] ml-2 text-sm"></i></h3>
@@ -92,10 +127,92 @@
                 </div>
             </div>
 
-            <!-- Mock remaining 3 templates briefly -->
-            <div class="bg-white rounded-xl shadow-md border border-gray-100 p-6 text-center"><h3 class="font-bold">Creative</h3><p class="text-sm text-gray-500 mt-2 mb-4">Icon-based sections</p><button class="w-full border border-[#1e3a5f] text-[#1e3a5f] py-2 rounded font-semibold hover:bg-gray-50 transition" onclick="window.location.href='/ResumeBuilder'">Use Template</button></div>
-            <div class="bg-white rounded-xl shadow-md border border-gray-100 p-6 text-center"><h3 class="font-bold">Minimal</h3><p class="text-sm text-gray-500 mt-2 mb-4">Lots of whitespace</p><button class="w-full border border-[#1e3a5f] text-[#1e3a5f] py-2 rounded font-semibold hover:bg-gray-50 transition" onclick="window.location.href='/ResumeBuilder'">Use Template</button></div>
-            <div class="bg-white rounded-xl shadow-md border border-gray-100 p-6 text-center"><h3 class="font-bold">Tech</h3><p class="text-sm text-gray-500 mt-2 mb-4">Developer-focused layout</p><button class="w-full border border-[#1e3a5f] text-[#1e3a5f] py-2 rounded font-semibold hover:bg-gray-50 transition" onclick="window.location.href='/ResumeBuilder'">Use Template</button></div>
+            <!-- Template 4: Creative -->
+            <div class="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden hover:shadow-xl transition relative group flex flex-col">
+                <div class="aspect-w-3 aspect-h-4 bg-gray-200">
+                    <div class="w-full h-64 bg-white border border-gray-300 p-4 flex flex-col">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="h-12 w-12 rounded-full bg-[#f59e0b]"></div>
+                            <div class="space-y-2 flex-1">
+                                <div class="h-5 bg-gray-800 w-1/2"></div>
+                                <div class="h-2 bg-gray-400 w-1/3"></div>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 flex-1">
+                            <div class="w-1/3 border-r border-gray-200 pr-2 space-y-4 mt-2">
+                                <div class="flex gap-2"><div class="h-3 w-3 rounded-full bg-[#1e3a5f] shrink-0 mt-0.5"></div><div class="h-2 bg-gray-400 w-full mt-1"></div></div>
+                                <div class="flex gap-2"><div class="h-3 w-3 rounded-full bg-[#1e3a5f] shrink-0 mt-0.5"></div><div class="h-2 bg-gray-400 w-5/6 mt-1"></div></div>
+                                <div class="flex gap-2"><div class="h-3 w-3 rounded-full bg-[#1e3a5f] shrink-0 mt-0.5"></div><div class="h-2 bg-gray-400 w-full mt-1"></div></div>
+                            </div>
+                            <div class="w-2/3 space-y-3 pl-2 mt-2">
+                                <div class="h-3 bg-gray-800 w-1/3 mb-2 rounded"></div>
+                                <div class="h-2 bg-gray-300 w-full rounded"></div>
+                                <div class="h-2 bg-gray-300 w-5/6 rounded"></div>
+                                <div class="h-3 bg-gray-800 w-1/3 mt-4 mb-2 rounded"></div>
+                                <div class="h-2 bg-gray-300 w-full rounded"></div>
+                                <div class="h-2 bg-gray-300 w-4/5 rounded"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6 text-center mt-auto">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Creative</h3>
+                    <p class="text-sm text-gray-500 mb-4">Icon-based sections</p>
+                    <button class="w-full border border-[#1e3a5f] text-[#1e3a5f] py-2 rounded font-semibold hover:bg-gray-50 transition" onclick="window.location.href='/ResumeBuilder?template=creative'">Use Template</button>
+                </div>
+            </div>
+
+            <!-- Template 5: Minimal -->
+            <div class="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden hover:shadow-xl transition relative group flex flex-col">
+                <div class="aspect-w-3 aspect-h-4 bg-gray-200">
+                    <div class="w-full h-64 bg-white border border-gray-300 p-8 flex flex-col items-start">
+                        <div class="h-6 bg-gray-800 w-2/5 mb-2"></div>
+                        <div class="h-2 bg-gray-400 w-1/4 mb-6"></div>
+
+                        <div class="w-full space-y-6">
+                            <div>
+                                <div class="h-2 bg-gray-400 w-1/5 mb-3 uppercase tracking-widest"></div>
+                                <div class="h-2 bg-gray-200 w-full mb-2"></div>
+                                <div class="h-2 bg-gray-200 w-3/4"></div>
+                            </div>
+                            <div>
+                                <div class="h-2 bg-gray-400 w-1/5 mb-3 uppercase tracking-widest"></div>
+                                <div class="h-2 bg-gray-200 w-full mb-2"></div>
+                                <div class="h-2 bg-gray-200 w-5/6 mb-2"></div>
+                                <div class="h-2 bg-gray-200 w-4/5"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6 text-center mt-auto">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Minimal</h3>
+                    <p class="text-sm text-gray-500 mb-4">Lots of whitespace</p>
+                    <button class="w-full border border-[#1e3a5f] text-[#1e3a5f] py-2 rounded font-semibold hover:bg-gray-50 transition" onclick="window.location.href='/ResumeBuilder?template=minimal'">Use Template</button>
+                </div>
+            </div>
+
+            <!-- Template 6: Tech -->
+            <div class="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden hover:shadow-xl transition relative group flex flex-col">
+                <div class="aspect-w-3 aspect-h-4 bg-gray-200">
+                    <div class="w-full h-64 bg-[#0d1117] border border-gray-800 p-5 font-mono text-xs flex flex-col space-y-3">
+                        <div class="flex items-center gap-2 mb-2"><span class="text-green-500 font-bold">></span><div class="h-3 bg-green-500 w-1/2"></div></div>
+                        <div class="h-2 bg-gray-500 w-1/3 mb-4"></div>
+
+                        <div class="flex items-center gap-2"><span class="text-blue-400 font-bold">#</span><div class="h-2 bg-blue-400 w-1/4"></div></div>
+                        <div class="h-2 bg-gray-600 w-full ml-4"></div>
+                        <div class="h-2 bg-gray-600 w-5/6 ml-4"></div>
+
+                        <div class="flex items-center gap-2 mt-3"><span class="text-blue-400 font-bold">#</span><div class="h-2 bg-blue-400 w-1/4"></div></div>
+                        <div class="h-2 bg-gray-600 w-full ml-4"></div>
+                        <div class="h-2 bg-gray-600 w-3/4 ml-4"></div>
+                    </div>
+                </div>
+                <div class="p-6 text-center mt-auto">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Tech</h3>
+                    <p class="text-sm text-gray-500 mb-4">Developer-focused layout</p>
+                    <button class="w-full border border-[#1e3a5f] text-[#1e3a5f] py-2 rounded font-semibold hover:bg-gray-50 transition" onclick="window.location.href='/ResumeBuilder?template=tech'">Use Template</button>
+                </div>
+            </div>
         </div>
     </main>
 </div>
