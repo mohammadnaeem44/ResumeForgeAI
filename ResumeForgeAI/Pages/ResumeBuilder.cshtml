@@ -1,4 +1,5 @@
-@page
+@page "{id?}"
+@model ResumeForgeAI.Pages.ResumeBuilderModel
 @{
     ViewData["Title"] = "Resume Builder";
     string templateTheme = Request.Query["template"].ToString().ToLower();
@@ -12,14 +13,14 @@
     <header class="h-16 bg-[#1e3a5f] text-white flex justify-between items-center px-4 shadow-md z-10 shrink-0">
         <div class="flex items-center space-x-4">
             <a href="/Dashboard" class="text-gray-300 hover:text-white"><i class="fa-solid fa-arrow-left"></i> Back</a>
-            <h1 class="text-xl font-bold flex items-center">
+            <div class="flex items-center text-xl font-bold">
                 <i class="fa-solid fa-file-pen text-[#f59e0b] mr-2"></i>
-                Untitled Resume Document
-            </h1>
+                <input type="text" id="document-title" class="bg-transparent border-none text-white focus:outline-none focus:ring-1 focus:ring-gray-400 placeholder-gray-300 w-64 p-1 rounded" value="Untitled Resume Document" placeholder="Document Name" />
+            </div>
         </div>
         <div class="flex items-center space-x-3">
             <button class="bg-white text-[#1e3a5f] px-4 py-2 rounded text-sm font-semibold hover:bg-gray-100 transition"><i class="fa-solid fa-palette mr-1"></i> Template</button>
-            <button class="border border-white text-white px-4 py-2 rounded text-sm font-semibold hover:bg-white hover:text-[#1e3a5f] transition" onclick="alert('Saving...')"><i class="fa-solid fa-floppy-disk mr-1"></i> Save</button>
+            <button class="border border-white text-white px-4 py-2 rounded text-sm font-semibold hover:bg-white hover:text-[#1e3a5f] transition" onclick="saveResume()"><i class="fa-solid fa-floppy-disk mr-1"></i> Save</button>
             <button class="bg-[#f59e0b] text-[#1e3a5f] px-4 py-2 rounded text-sm font-semibold hover:bg-yellow-400 transition" onclick="window.print()"><i class="fa-solid fa-download mr-1"></i> Download PDF</button>
         </div>
     </header>
@@ -289,11 +290,9 @@
                     <div class="space-y-3">
                         <div class="p-3 bg-blue-50 border border-blue-100 rounded-lg cursor-pointer hover:bg-blue-100 transition shadow-sm" onclick="applyAiText('Engineered a high-performance cloud-native microservices architecture...')">
                             <p class="text-sm text-gray-700">Engineered a high-performance cloud-native microservices architecture, improving system scalability by 40%.</p>
-                            <span class="text-xs text-[#f59e0b] font-bold mt-2 inline-block">+ Apply</span>
                         </div>
                         <div class="p-3 bg-blue-50 border border-blue-100 rounded-lg cursor-pointer hover:bg-blue-100 transition shadow-sm" onclick="applyAiText('Spearheaded migration of legacy systems to AWS...')">
                             <p class="text-sm text-gray-700">Spearheaded migration of legacy REST APIs to AWS Serverless architecture.</p>
-                            <span class="text-xs text-[#f59e0b] font-bold mt-2 inline-block">+ Apply</span>
                         </div>
                     </div>
                 </div>
@@ -308,7 +307,8 @@
         const loading = document.getElementById('ai-loading');
         const results = document.getElementById('ai-results');
 
-        if(document.getElementById('ai-jd-input').value.trim() === '') {
+        const jdText = document.getElementById('ai-jd-input').value.trim();
+        if(jdText === '') {
             alert('Please paste a job description first.');
             return;
         }
@@ -318,13 +318,39 @@
         loading.classList.remove('hidden');
         results.classList.add('hidden');
 
-        // Mock AI request
-        setTimeout(() => {
+        fetch('?handler=GenerateSuggestions', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ JobDescription: jdText })
+        })
+        .then(response => response.json())
+        .then(data => {
             loading.classList.add('hidden');
             results.classList.remove('hidden');
             btn.disabled = false;
             btn.classList.remove('opacity-50');
-        }, 2000); // 2 second mock delay
+
+            const container = results.querySelector('.space-y-3');
+            container.innerHTML = '';
+
+            if (Array.isArray(data)) {
+                data.forEach(bullet => {
+                    const div = document.createElement('div');
+                    div.className = 'p-3 bg-blue-50 border border-blue-100 rounded-lg cursor-pointer hover:bg-blue-100 transition shadow-sm';
+                    div.onclick = () => applyAiText(bullet);
+                    div.innerHTML = `<p class="text-sm text-gray-700">${bullet}</p>`;
+                    container.appendChild(div);
+                });
+            } else {
+                container.innerHTML = '<p class="text-sm text-red-500">Failed to load suggestions.</p>';
+            }
+        })
+        .catch(err => {
+            alert('Failed to generate suggestions: ' + err);
+            loading.classList.add('hidden');
+            btn.disabled = false;
+            btn.classList.remove('opacity-50');
+        });
     });
 
     function applyAiText(text) {
@@ -468,12 +494,77 @@
         });
         linkedInInput.dispatchEvent(new Event('input')); // Trigger initial state
     }
+
+    function saveResume() {
+        const id = '@(Model.ResumeId)';
+        const title = document.getElementById('document-title').value.trim() || 'Untitled Resume Document';
+
+        // Simple serialization of all input values
+        const inputs = {};
+        document.querySelectorAll('.w-1\\/3.bg-white.border-r input, .w-1\\/3.bg-white.border-r textarea').forEach(el => {
+            if(el.id) {
+                inputs[el.id] = el.value;
+            }
+        });
+
+        // Save title into JSON state so it can be reloaded
+        inputs['document-title'] = title;
+
+        const json = JSON.stringify(inputs);
+
+        fetch('?handler=Save', {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ Id: id, Title: title, ResumeJson: json })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.success) {
+                alert('Resume saved successfully!');
+                if(!id && data.id) {
+                    // Update URL silently
+                    const newUrl = new URL(window.location);
+                    newUrl.pathname = '/ResumeBuilder/' + data.id;
+                    window.history.pushState({}, '', newUrl);
+                }
+            } else {
+                alert('Failed to save resume.');
+            }
+        })
+        .catch(err => alert('Save error: ' + err));
+    }
+
+    // Preload
+    const preload = '@Html.Raw(Model.PreloadJson?.Replace("'", "\\'") ?? "")';
+    if(preload) {
+        try {
+            const data = JSON.parse(preload);
+            for(let key in data) {
+                let el = document.getElementById(key);
+                if(el) {
+                    el.value = data[key];
+                    el.dispatchEvent(new Event('input'));
+                }
+            }
+        } catch(e) { console.error("Failed to load preload data", e); }
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    if(urlParams.has('download')) {
+        setTimeout(() => { window.print(); }, 1000); // 1s delay for render
+    }
 </script>
 
 <style>
     /* Prevent default layout applied to body from ruining h-screen */
     html, body {
         height: 100%;
+        margin: 0;
+    }
+    @@page {
+        size: A4;
         margin: 0;
     }
     @@media print {
@@ -488,6 +579,8 @@
             left: 0;
             top: 0;
             width: 100%;
+            margin: 0;
+            padding: 20mm !important; /* ensures proper padding replaces browser hardware margins */
         }
     }
 

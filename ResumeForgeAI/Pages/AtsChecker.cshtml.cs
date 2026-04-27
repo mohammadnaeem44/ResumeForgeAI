@@ -67,11 +67,7 @@ namespace ResumeForgeAI.Pages
                 return BadRequest("No resume content found. Please upload a PDF or paste text.");
             }
 
-            var apiKey = _config["OpenAI:ApiKey"];
-            if (string.IsNullOrEmpty(apiKey))
-            {
-                return StatusCode(500, "API Key is missing from configuration.");
-            }
+            var apiKey = Environment.GetEnvironmentVariable("GROQ_API_KEY") ?? _config["Groq:ApiKey"];
 
             var responseJson = "";
             try
@@ -96,13 +92,13 @@ Job Description:
 
                 var payload = new
                 {
-                    model = "gpt-3.5-turbo",
+                    model = "llama-3.1-8b-instant",
                     messages = new[] { new { role = "user", content = promptContent } },
                     temperature = 0.2
                 };
 
                 var content = new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");
-                var response = await client.PostAsync("https://api.openai.com/v1/chat/completions", content);
+                var response = await client.PostAsync("https://api.groq.com/openai/v1/chat/completions", content);
 
                 if (!response.IsSuccessStatusCode)
                 {
