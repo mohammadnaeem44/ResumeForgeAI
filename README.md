@@ -34,6 +34,25 @@
 - **🔐 User Authentication:** Built-in membership features allowing users to seamlessly register, log in, and manage their profiles securely.
 - **💅 Modern, Responsive UI:** The frontend is beautifully crafted with **Tailwind CSS**, providing a crisp, user-friendly interface that feels modern and professional.
 
+## 📸 Application Gallery
+
+<details>
+<summary>Click to view screenshots of ResumeForgeAI in action</summary>
+
+### 1. Interactive Resume Builder
+*Features a side-by-side split screen for real-time live preview editing and an AI Assistant to generate achievement bullets.*
+<img src="ResumeForgeAI/assets/Resume%20details.png" alt="Resume Builder Details" width="100%">
+
+### 2. Deep ATS Score Analysis
+*Get instantaneous feedback on your current resume relative to a target job description.*
+<img src="ResumeForgeAI/assets/ats%20score.png" alt="ATS Score Summary" width="100%">
+
+### 3. Cover Letter Workflows
+*Easily pivot from resume building directly to crafting the perfect matching cover letter.*
+<img src="ResumeForgeAI/assets/cover%20letter.png" alt="Cover Letter Management" width="100%">
+
+</details>
+
 ## 💻 Tech Stack
 
 - **Backend:** C#, .NET 8.0, ASP.NET Core Razor Pages
