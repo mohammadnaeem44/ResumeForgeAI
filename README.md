@@ -108,7 +108,3 @@ Feel free to browse the source code. The generative AI logic resides primarily i
 - **GitHub:** [github.com/mohammadnaeem44](https://github.com/mohammadnaeem44)  
 
 ---
-
-<p align="center">
-  <i>Developed with ❤️ by <a href="https://github.com/mohammadnaeem44">Mohammad Naeem</a></i>
-</p>
