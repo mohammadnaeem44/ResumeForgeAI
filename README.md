@@ -103,11 +103,9 @@ Feel free to browse the source code. The generative AI logic resides primarily i
 ## 📬 Contact Information
 
 **Mohammad Naeem**  
-- **Email:** [mohammadnaeem.cse@gmail.com](mailto:mohammadnaeem.cse@gmail.com)  
-- **Phone:** +92-319-3501221  
+- **Email:** [mohammadnaeem.cse@gmail.com](mailto:mohammadnaeem.cse@gmail.com)   
 - **LinkedIn:** [linkedin.com/in/mohammad-naeem](https://linkedin.com/in/mohammad-naeem)  
 - **GitHub:** [github.com/mohammadnaeem44](https://github.com/mohammadnaeem44)  
-- **Location:** Ghotki, Sindh, Pakistan  
 
 ---
 
