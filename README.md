@@ -256,8 +256,8 @@ The model receives the job title, company name, selected tone, and optional job 
 
 **Ibad Ur Rahman Memon**
 - 📧 [ibad.cse@gmail.com](mailto:ibad.cse@gmail.com)
-- 🔗 [linkedin.com/in/ibad-ur-rahman](https://linkedin.com/in/ibad-ur-rahman-memon)
-- 🐙 [github.com/IbadUrRahman](https://github.com/IbadUrRahman)
+- 🔗 [linkedin.com/in/ibad-ur-rahman-memon](https://linkedin.com/in/ibad-ur-rahman-memon)
+- 🐙 [github.com/IbadUrRahman](https://github.com/Ibad-Ur-Rahman-Memon)
 
 **Mohammad Naeem**
 - 📧 [mohammadnaeem.cse@gmail.com](mailto:mohammadnaeem.cse@gmail.com)
