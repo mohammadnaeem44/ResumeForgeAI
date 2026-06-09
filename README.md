@@ -1,10 +1,9 @@
 <div align="center">
 
-<img src="ResumeForgeAI/assets/logo.png" alt="ResumeForge AI Logo" width="80" />
+# 🔨 ResumeForge AI
 
-# ResumeForge AI
-
-**An AI-powered career toolkit that helps job seekers craft perfect resumes, generate tailored cover letters, and confidently pass Applicant Tracking Systems (ATS).**
+**An AI-powered career toolkit that helps job seekers craft perfect resumes,
+generate tailored cover letters, and confidently pass Applicant Tracking Systems (ATS).**
 
 [![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
 [![ASP.NET Core](https://img.shields.io/badge/ASP.NET_Core-Razor_Pages-512BD4?logo=dotnet)](https://learn.microsoft.com/en-us/aspnet/core/razor-pages)
@@ -74,11 +73,12 @@ Generate a complete, professional cover letter in seconds:
 
 ### 🎨 Templates Gallery
 Six professionally designed, ATS-optimised resume templates:
+
 | Template | Description |
 |---|---|
 | **Classic** | Traditional black-and-white — maximally ATS-compatible |
 | **Modern** *(Default)* | Clean lines with a dark navy accent sidebar |
-| **Executive** *(Premium)* | Two-column layout targeting senior roles |
+| **Executive** *(Premium)* | Two-column layout targeting senior roles — locked tier |
 | **Creative** | Avatar/photo element for creative industry roles |
 | **Minimal** | Typographically focused, clean whitespace |
 | **Tech/Developer** | Dark terminal-inspired theme for technical roles |
@@ -164,34 +164,33 @@ A personalised overview of your account activity:
 ---
 
 ## 📁 Project Structure
-
+```text
 ResumeForgeAI/
 ├── Data/
-│   └── AppDatabase.cs          # JSON data access layer (users, resumes, cover letters)
+│   └── AppDatabase.cs           # JSON data access layer (users, resumes, cover letters)
 ├── Models/
 │   └── ErrorViewModel.cs
 ├── Pages/
-│   ├── Login.cshtml(.cs)        # Authentication — login
-│   ├── Register.cshtml(.cs)     # Authentication — registration
-│   ├── Dashboard.cshtml(.cs)    # User dashboard & resume history
-│   ├── ResumeBuilder.cshtml(.cs)# Live resume editor + AI bullet point generator
-│   ├── CoverLetter.cshtml       # AI cover letter generator
-│   ├── AtsChecker.cshtml(.cs)   # ATS compatibility analyser
-│   ├── Templates.cshtml         # Template gallery
+│   ├── Login.cshtml(.cs)         # Authentication — login
+│   ├── Register.cshtml(.cs)      # Authentication — registration
+│   ├── Dashboard.cshtml(.cs)     # User dashboard & resume history
+│   ├── ResumeBuilder.cshtml(.cs) # Live resume editor + AI bullet point generator
+│   ├── CoverLetter.cshtml        # AI cover letter generator
+│   ├── AtsChecker.cshtml(.cs)    # ATS compatibility analyser
+│   ├── Templates.cshtml          # Template gallery
 │   └── Shared/
-│       └── _Layout.cshtml       # Master layout — sidebar + brand header
+│       └── _Layout.cshtml        # Master layout — sidebar + brand header
 ├── wwwroot/
-│   ├── css/site.css             # Custom brand styles (navy + orange theme)
-│   └── js/site.js               # UI interactions & live preview logic
+│   ├── css/site.css              # Custom brand styles (navy + orange theme)
+│   └── js/site.js                # UI interactions & live preview logic
 ├── assets/
-│   └── screenshots/             # Application screenshots (add images here)
-├── database.json                # User accounts + cover letter records
-├── resumes.json                 # Saved resume data
-├── appsettings.json             # App config (API keys, settings)
-└── Program.cs                   # App bootstrap — services + middleware
-
+│   └── screenshots/              # Application screenshots
+├── database.json                 # User accounts + cover letter records
+├── resumes.json                  # Saved resume data
+├── appsettings.json              # App config (API keys, settings)
+└── Program.cs                    # App bootstrap — services + middleware
+```
 ---
-
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -204,13 +203,13 @@ ResumeForgeAI/
 
 **1. Clone the repository**
 ```bash
-git clone https://github.com/mohammadnaeem44/ResumeForgeAI.git
+git clone https://github.com/IbadUrRahman/ResumeForgeAI.git
 cd ResumeForgeAI
 ```
 
 **2. (Optional) Configure your own Groq API key**
 
-Open `Pages/AtsChecker.cshtml.cs` and `Pages/ResumeBuilder.cshtml.cs` and replace the `apiKey` variable with your key:
+Open `Pages/AtsChecker.cshtml.cs` and `Pages/ResumeBuilder.cshtml.cs` and replace the `apiKey` variable with your own key:
 ```csharp
 string apiKey = "YOUR_GROQ_API_KEY_HERE";
 ```
@@ -222,21 +221,48 @@ dotnet run --project ResumeForgeAI
 
 **4. Open in browser**
 
-Navigate to the port shown in the terminal output:
+Navigate to the port shown in your terminal output — typically:
+
+https://localhost:7272
+
+> **Note:** On first run, `database.json` and `resumes.json` are created automatically if they do not exist.
+
+---
+
+## 🧠 AI Integration Details
+
+All AI features use the **Groq API** with the `llama-3.1-8b-instant` model via .NET's `HttpClient`. The generative logic lives in these files:
+
+| File | AI Feature |
+|---|---|
+| `Pages/ResumeBuilder.cshtml.cs` | Resume bullet point generation |
+| `Pages/AtsChecker.cshtml.cs` | ATS scoring + keyword analysis + improvement suggestions |
+| `Pages/CoverLetter.cshtml` | Cover letter generation |
+
+### Resume Bullet Point Generation
+The Page Model constructs a structured prompt containing the target job description and the candidate's existing job title and company for each experience entry. The model returns 4–5 ATS-optimised, action-verb-led bullet points that are injected directly into the live preview without a page reload.
+
+### ATS Analysis
+A hybrid approach is used:
+1. **Keyword overlap scoring** — server-side tokenisation computes the quantitative match percentage
+2. **Groq Llama 3.1** — called with both the resume text and job description to produce qualitative improvement suggestions, missing keyword identification, and a narrative fit assessment
+
+### Cover Letter Generation
+The model receives the job title, company name, selected tone, and optional job description. It returns a fully formatted letter — date, greeting, 3–4 body paragraphs, and closing — which is rendered immediately in the right-panel preview and saved to the user's account.
 
 ---
 
 ## 📬 Contact
 
 **Ibad Ur Rahman Memon**
-- 📧 Email: [ibad.cse@gmail.com](mailto:ibad.cse@gmail.com)
-- 🔗 LinkedIn: [linkedin.com/in/ibad-ur-rahman](https://linkedin.com/in/ibad-ur-rahman)
-- 🐙 GitHub: [github.com/IbadUrRahman](https://github.com/IbadUrRahman)
+- 📧 [ibad.cse@gmail.com](mailto:ibad.cse@gmail.com)
+- 🔗 [linkedin.com/in/ibad-ur-rahman](https://linkedin.com/in/ibad-ur-rahman-memon)
+- 🐙 [github.com/IbadUrRahman](https://github.com/IbadUrRahman)
 
-**Mohammad Naeem**  
-- 📧 Email: [mohammadnaeem.cse@gmail.com](mailto:mohammadnaeem.cse@gmail.com)   
-- 🔗 LinkedIn: [linkedin.com/in/mohammad-naeem](https://linkedin.com/in/mohammad-naeem)  
-- 🐙 GitHub: [github.com/mohammadnaeem44](https://github.com/mohammadnaeem44)  
+**Mohammad Naeem**
+- 📧 [mohammadnaeem.cse@gmail.com](mailto:mohammadnaeem.cse@gmail.com)
+- 🔗 [linkedin.com/in/mohammad-naeem](https://linkedin.com/in/mohammad-naeem)
+- 🐙 [github.com/mohammadnaeem44](https://github.com/mohammadnaeem44)
 
 ---
 
@@ -245,5 +271,3 @@ Navigate to the port shown in the terminal output:
 Built with ❤️ at **Sukkur IBA University** — Computer Systems Engineering
 
 </div>
-
-
