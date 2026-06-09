@@ -1,110 +1,249 @@
-<h1 align="center">
-  🚀 ResumeForgeAI
-</h1>
+<div align="center">
 
-<p align="center">
-  <strong>An AI-powered application built to help job seekers craft the perfect resume and confidently pass Applicant Tracking Systems (ATS).</strong>
-</p>
+<img src="ResumeForgeAI/assets/logo.png" alt="ResumeForge AI Logo" width="80" />
 
-<p align="center">
-  <img src="https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet&logoColor=white" alt=".NET 8" />
-  <img src="https://img.shields.io/badge/ASP.NET_Core-Razor_Pages-512BD4?logo=dotnet" alt="ASP.NET Core Razor Pages" />
-  <img src="https://img.shields.io/badge/Groq-Llama_3.1--8B-412991?logo=groq&logoColor=white" alt="Groq Llama 3.1 API" />
-  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
-  <img src="https://img.shields.io/badge/PDF_Parsing-PdfPig-red" alt="PdfPig" />
-</p>
+# ResumeForge AI
+
+**An AI-powered career toolkit that helps job seekers craft perfect resumes, generate tailored cover letters, and confidently pass Applicant Tracking Systems (ATS).**
+
+[![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
+[![ASP.NET Core](https://img.shields.io/badge/ASP.NET_Core-Razor_Pages-512BD4?logo=dotnet)](https://learn.microsoft.com/en-us/aspnet/core/razor-pages)
+[![Groq](https://img.shields.io/badge/Groq-Llama_3.1--8B-412991?logo=groq&logoColor=white)](https://console.groq.com/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![PdfPig](https://img.shields.io/badge/PDF_Parsing-PdfPig-red)](https://github.com/UglyToad/PdfPig)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+</div>
+
+---
+
+## 📋 Table of Contents
+
+- [Overview](#-overview)
+- [Key Features](#-key-features)
+- [Application Screenshots](#-application-screenshots)
+- [Tech Stack](#-tech-stack)
+- [Project Structure](#-project-structure)
+- [Getting Started](#-getting-started)
+- [AI Integration Details](#-ai-integration-details)
+- [Contact](#-contact)
 
 ---
 
 ## 🌟 Overview
-**ResumeForgeAI** is a comprehensive tool designed for the modern job application process. Navigating the job market often means getting past automated Applicant Tracking Systems (ATS). This project bridges that gap by offering an intuitive **Resume Builder** alongside an **AI-driven ATS Checker** that scores a resume against a specific job description—all running on a modern .NET 8 technical stack utilizing the lightning-fast **Groq API with Llama 3.1 8B**.
+
+**ResumeForge AI** is a comprehensive, full-stack web application designed for the modern job application process. Navigating today's competitive job market means getting past automated Applicant Tracking Systems (ATS) before a human ever sees your resume — this project bridges that gap.
+
+The platform provides an end-to-end career toolkit:
+
+- 🔨 **Build** a polished resume with a live split-screen editor
+- 🤖 **Generate** AI-powered bullet points tailored to any job description
+- ✉️ **Create** professional cover letters in seconds with configurable tone
+- 📊 **Analyse** your resume's ATS compatibility against a real job posting
+- 🎨 **Choose** from multiple professionally designed, ATS-optimised templates
+
+All AI features run on the lightning-fast **Groq API with Llama 3.1 8B**, delivering near-instant generative responses without the latency of heavier model endpoints.
+
+---
 
 ## ✨ Key Features
 
-- **🤖 AI-Powered ATS Checker & Assistant:** Upload your existing resume (PDF) and paste a Job Description. The application utilizes the **Groq Llama 3.1 API** to deeply analyze your fit, providing:
-  - An overall match score and dynamic generative feedback.
-  - Identified matching skills and missing keywords.
-  - Actionable suggestions for improvement directly in the builder.
-- **📄 Interactive Resume Builder with Multiple Themes:** Create professional, aesthetically pleasing resumes with a real-time responsive builder UI. 
-  - Switch between 5 dynamically loading visual templates (`Modern`, `Classic`, `Creative`, `Minimal`, and `Tech`).
-  - Flexibly duplicate data-entry fields using deep-cloned inputs that map identically to your preview document.
-  - Download the finished resume directly as an A4-optimized crisp PDF without any default browser margins!
-- **🕒 Real-time Local State Persistence:** JSON-based state saving tracks your resume history natively into your Custom Dashboard, syncing title, template, and all bullet points allowing quick edits and downloads of past iterations.
-- **📂 PDF Processing:** Leverages the powerful `UglyToad.PdfPig` library to effortlessly extract text from uploaded PDF resumes for detailed text analysis.
-- **🔐 User Authentication:** Built-in membership features allowing users to seamlessly register, log in, and manage their profiles securely.
-- **💅 Modern, Responsive UI:** The frontend is beautifully crafted with **Tailwind CSS**, providing a crisp, user-friendly interface that feels modern and professional.
+### 🤖 AI-Powered ATS Compatibility Checker
+Upload your resume (PDF/DOCX) or paste it as plain text alongside a target job description. The Groq Llama 3.1 engine performs a deep semantic analysis and returns:
+- An overall **ATS match score** (0–100%)
+- **Matched keywords** found in both resume and job description
+- **Missing keywords** to add for a higher score
+- **Actionable AI suggestions** for targeted improvements
 
-## 📸 Application Gallery
+### 📄 Interactive Resume Builder
+A three-panel split-screen builder with a real-time live preview:
+- Fill in Personal Info, Summary, Work Experience, Education, and Skills
+- The centre panel renders your resume **live as you type** — no page reload needed
+- **AI Assistant panel**: paste a job description and generate 4–5 ATS-optimised bullet points per experience entry with one click
+- Switch between **5 visual templates** (Modern, Classic, Creative, Minimal, Tech) that apply instantly to the preview
+- **Download as PDF** — A4-optimised, margin-perfect output via html2pdf.js
+- **Save** your resume and access it from the Dashboard at any time
 
-<details>
-<summary>Click to view screenshots of ResumeForgeAI in action</summary>
+### ✉️ AI Cover Letter Generator
+Generate a complete, professional cover letter in seconds:
+- Input: Job Title, Company Name, and Tone (Professional & Formal / Enthusiastic & Creative / Concise & Direct)
+- Optionally paste the job description for a more targeted result
+- Preview renders the full letter with date, greeting, and formatted body
+- **Download as PDF** with one click
+- All generated letters are saved to your account
 
-### 1. Interactive Resume Builder
-*Features a side-by-side split screen for real-time live preview editing and an AI Assistant to generate achievement bullets.*
-<img src="ResumeForgeAI/assets/Resume%20details.png" alt="Resume Builder Details" width="100%">
+### 🎨 Templates Gallery
+Six professionally designed, ATS-optimised resume templates:
+| Template | Description |
+|---|---|
+| **Classic** | Traditional black-and-white — maximally ATS-compatible |
+| **Modern** *(Default)* | Clean lines with a dark navy accent sidebar |
+| **Executive** *(Premium)* | Two-column layout targeting senior roles |
+| **Creative** | Avatar/photo element for creative industry roles |
+| **Minimal** | Typographically focused, clean whitespace |
+| **Tech/Developer** | Dark terminal-inspired theme for technical roles |
 
-### 2. Deep ATS Score Analysis
-*Get instantaneous feedback on your current resume relative to a target job description.*
-<img src="ResumeForgeAI/assets/ats%20score.png" alt="ATS Score Summary" width="100%">
+### 📊 Personal Dashboard
+A personalised overview of your account activity:
+- Total resumes created, cover letters generated, and average ATS score
+- Recent resumes list with quick-edit and download access
+- One-click **+ New Resume** creation
 
-### 3. Cover Letter Workflows
-*Easily pivot from resume building directly to crafting the perfect matching cover letter.*
-<img src="ResumeForgeAI/assets/cover%20letter.png" alt="Cover Letter Management" width="100%">
+### 🔐 Secure Authentication
+- Email + password registration and login
+- Cookie-based session authentication (ASP.NET Core)
+- CSRF protection on all POST forms
+- Remember Me and Forgot Password support
 
-</details>
+---
+
+## 📸 Application Screenshots
+
+### Sign In
+*Clean, centred authentication page with the ResumeForge AI brand.*
+
+![Sign In Screen](ResumeForgeAI/assets/screenshots/signin_screen.PNG)
+
+---
+
+### Create Account
+*Simple registration form collecting name, email, university/company, and password.*
+
+![Sign Up Screen](ResumeForgeAI/assets/screenshots/signup_screen.PNG)
+
+---
+
+### Dashboard
+*Personalised welcome with summary stats — resumes created, cover letters generated, and average ATS score.*
+
+![Dashboard Screen](ResumeForgeAI/assets/screenshots/dashboard_screen.PNG)
+
+---
+
+### Resume Builder
+*Three-panel split-screen editor: data entry form (left), live resume preview (centre), and AI Assistant (right).*
+
+![Resume Builder Screen](ResumeForgeAI/assets/screenshots/resume_building_screen.PNG)
+
+---
+
+### AI Cover Letter Generator
+*Input job title, company, and tone on the left; formatted cover letter renders in real time on the right.*
+
+![Cover Letter Screen](ResumeForgeAI/assets/screenshots/coverletter_screen.PNG)
+
+---
+
+### ATS Compatibility Checker
+*Upload or paste your resume alongside a job description to get an instant match score and keyword breakdown.*
+
+![ATS Checker Screen](ResumeForgeAI/assets/screenshots/ats_checker_screen.PNG)
+
+---
+
+### Templates Gallery
+*Six ATS-optimised visual themes — select any to apply it instantly to your resume preview.*
+
+![Templates Screen](ResumeForgeAI/assets/screenshots/cv_templetes_screen.PNG)
+
+---
 
 ## 💻 Tech Stack
 
-- **Backend:** C#, .NET 8.0, ASP.NET Core Razor Pages
-- **Frontend:** HTML5, Razor Syntaxes, Tailwind CSS, Vanilla JS
-- **AI Integration:** Groq API (`llama-3.1-8b-instant` via `HttpClient`)
-- **PDF Extraction:** `UglyToad.PdfPig`
-- **Data Persistence:** Custom lightweight JSON database mapping for auth and dynamically loaded resume models.
+| Layer | Technology | Detail |
+|---|---|---|
+| **Backend** | C# / .NET 8.0 | ASP.NET Core Razor Pages |
+| **Frontend** | HTML5, Tailwind CSS, Vanilla JS | Razor syntax templating |
+| **AI Engine** | Groq API | `llama-3.1-8b-instant` via HttpClient |
+| **PDF Export** | html2pdf.js | Client-side A4 PDF generation |
+| **PDF Parsing** | UglyToad.PdfPig | Server-side resume text extraction |
+| **Data Storage** | JSON Flat-File | Custom lightweight database layer |
+| **Authentication** | ASP.NET Core Cookie Auth | Claims-based session identity |
+| **Build / IDE** | .NET 8 SDK + Visual Studio 2022 | MSBuild |
+
+---
+
+## 📁 Project Structure
+
+ResumeForgeAI/
+├── Data/
+│   └── AppDatabase.cs          # JSON data access layer (users, resumes, cover letters)
+├── Models/
+│   └── ErrorViewModel.cs
+├── Pages/
+│   ├── Login.cshtml(.cs)        # Authentication — login
+│   ├── Register.cshtml(.cs)     # Authentication — registration
+│   ├── Dashboard.cshtml(.cs)    # User dashboard & resume history
+│   ├── ResumeBuilder.cshtml(.cs)# Live resume editor + AI bullet point generator
+│   ├── CoverLetter.cshtml       # AI cover letter generator
+│   ├── AtsChecker.cshtml(.cs)   # ATS compatibility analyser
+│   ├── Templates.cshtml         # Template gallery
+│   └── Shared/
+│       └── _Layout.cshtml       # Master layout — sidebar + brand header
+├── wwwroot/
+│   ├── css/site.css             # Custom brand styles (navy + orange theme)
+│   └── js/site.js               # UI interactions & live preview logic
+├── assets/
+│   └── screenshots/             # Application screenshots (add images here)
+├── database.json                # User accounts + cover letter records
+├── resumes.json                 # Saved resume data
+├── appsettings.json             # App config (API keys, settings)
+└── Program.cs                   # App bootstrap — services + middleware
+
+---
 
 ## 🚀 Getting Started
 
-To get a local copy up and running, follow these simple steps.
-
 ### Prerequisites
+
 - [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
-- An active [Groq API Key](https://console.groq.com/) (The app provides a fallback testing key for Llama 3.1 inference by default within `AtsChecker.cshtml.cs` & `ResumeBuilder.cshtml.cs`).
-- An IDE such as Visual Studio 2022 or JetBrains Rider
+- A free [Groq API Key](https://console.groq.com/) *(a fallback testing key is included by default in `AtsChecker.cshtml.cs` and `ResumeBuilder.cshtml.cs`)*
+- Visual Studio 2022 or JetBrains Rider (recommended), or any editor with C# support
 
-### Installation & Setup
+### Installation
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/mohammadnaeem44/ResumeForgeAI.git
-   cd ResumeForgeAI
-   ```
+**1. Clone the repository**
+```bash
+git clone https://github.com/mohammadnaeem44/ResumeForgeAI.git
+cd ResumeForgeAI
+```
 
-2. **Configure your API Key:**
-   If you wish to use your own API key rather than the existing one, update the `apiKey` variable directly inside the `AtsChecker.cshtml.cs` and `ResumeBuilder.cshtml.cs` Handlers.
+**2. (Optional) Configure your own Groq API key**
 
-3. **Build and Run:**
-   ```bash
-   dotnet run --project ResumeForgeAI
-   ```
-4. **View in Browser:**
-   Open your browser and navigate to `https://localhost:xxxx` (port will be displayed in the terminal).
+Open `Pages/AtsChecker.cshtml.cs` and `Pages/ResumeBuilder.cshtml.cs` and replace the `apiKey` variable with your key:
+```csharp
+string apiKey = "YOUR_GROQ_API_KEY_HERE";
+```
 
-## 🧑‍💻 Note for Recruiters & Hiring Managers
+**3. Build and run**
+```bash
+dotnet run --project ResumeForgeAI
+```
 
-**ResumeForgeAI** was built to demonstrate proficiency across the full web development stack:
-- **Backend Architecture:** Implementing structured Razor Pages, lightweight JSON data management models (reading/writing historic resumes dynamically to dashboards), and clean separation of concerns in modern ASP.NET Core.
-- **Third-Party Integrations:** Interacting with complex external APIs (Groq / Llama 3.1) to extract structured JSON responses and generative chat completions, showcasing prompt engineering and complex asynchronous error handling.
-- **Frontend Matrix Tracking:** Advanced usage of Vanilla JS to perform recursive deep-cloning of unique UUID elements that map left-panel DOM input events directly to uniquely constructed DOM preview panes without resorting to frontend React/Vue state frameworks. 
-- **Print Optimization:** Fine-tuned targeted CSS (`@page`) controlling how raw DOM nodes synthesize directly into localized PDF download engines without layout breaking.
+**4. Open in browser**
 
-Feel free to browse the source code. The generative AI logic resides primarily in `Pages/AtsChecker.cshtml.cs` and `Pages/ResumeBuilder.cshtml.cs`, and the responsive UI state structures are best viewed in `Pages/ResumeBuilder.cshtml` & `Pages/Dashboard.cshtml`.
+Navigate to the port shown in the terminal output:
 
 ---
 
-## 📬 Contact Information
+## 📬 Contact
+
+**Ibad Ur Rahman Memon**
+- 📧 Email: [ibad.cse@gmail.com](mailto:ibad.cse@gmail.com)
+- 🔗 LinkedIn: [linkedin.com/in/ibad-ur-rahman](https://linkedin.com/in/ibad-ur-rahman)
+- 🐙 GitHub: [github.com/IbadUrRahman](https://github.com/IbadUrRahman)
 
 **Mohammad Naeem**  
-- **Email:** [mohammadnaeem.cse@gmail.com](mailto:mohammadnaeem.cse@gmail.com)   
-- **LinkedIn:** [linkedin.com/in/mohammad-naeem](https://linkedin.com/in/mohammad-naeem)  
-- **GitHub:** [github.com/mohammadnaeem44](https://github.com/mohammadnaeem44)  
+- 📧 Email: [mohammadnaeem.cse@gmail.com](mailto:mohammadnaeem.cse@gmail.com)   
+- 🔗 LinkedIn: [linkedin.com/in/mohammad-naeem](https://linkedin.com/in/mohammad-naeem)  
+- 🐙 GitHub: [github.com/mohammadnaeem44](https://github.com/mohammadnaeem44)  
 
 ---
+
+<div align="center">
+
+Built with ❤️ at **Sukkur IBA University** — Computer Systems Engineering
+
+</div>
+
+
